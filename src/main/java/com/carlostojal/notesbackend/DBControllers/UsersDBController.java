@@ -1,6 +1,5 @@
 package com.carlostojal.notesbackend.DBControllers;
 
-import com.carlostojal.notesbackend.Entities.Note;
 import com.carlostojal.notesbackend.Entities.Session;
 import com.carlostojal.notesbackend.Entities.User;
 
@@ -16,7 +15,7 @@ public class UsersDBController {
         try {
             Connection c = Connector.getConnection();
             Statement stm = c.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT * FROM user");
+            ResultSet rs = stm.executeQuery("SELECT * FROM note_user");
 
             while (rs.next()) {
                 User u = new User();
@@ -40,7 +39,7 @@ public class UsersDBController {
 
         try {
             Connection c = Connector.getConnection();
-            PreparedStatement stm = c.prepareStatement("SELECT * FROM user WHERE id = ?");
+            PreparedStatement stm = c.prepareStatement("SELECT * FROM note_user WHERE id = ?");
             stm.setString(1, id.toString());
 
             ResultSet rs = stm.executeQuery();
@@ -66,7 +65,7 @@ public class UsersDBController {
 
         try {
             Connection c = Connector.getConnection();
-            PreparedStatement stm = c.prepareStatement("INSERT INTO user (id, username, password) VALUES (?, ?, ?)");
+            PreparedStatement stm = c.prepareStatement("INSERT INTO note_user (id, username, password) VALUES (?, ?, ?)");
             stm.setString(1, u.getId().toString());
             stm.setString(2, u.getUsername());
             stm.setString(3, u.getPassword());
@@ -79,24 +78,19 @@ public class UsersDBController {
         }
     }
 
-    public static Session login(User u) {
+    public static User login(User u) {
 
         try {
             Connection c = Connector.getConnection();
-            PreparedStatement stm = c.prepareStatement("SELECT * FROM user WHERE username = ? AND password = ?");
+            PreparedStatement stm = c.prepareStatement("SELECT * FROM note_user WHERE username = ? AND password = ?");
             stm.setString(1, u.getUsername());
             stm.setString(2, u.getPassword());
 
             ResultSet rs = stm.executeQuery();
 
             if(rs.next()) {
-
-                Session s = new Session();
-                // get whole user from the database
-                u = UsersDBController.getById(UUID.fromString(rs.getString("id")));
-                s.setUser(u);
-
-                return s;
+                u.setId(UUID.fromString(rs.getString("id")));
+                return u;
             }
 
             rs.close();

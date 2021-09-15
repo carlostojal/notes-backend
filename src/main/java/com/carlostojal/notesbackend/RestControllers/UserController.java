@@ -31,10 +31,4 @@ public class UserController {
         u.setPassword(null);
         return u;
     }
-
-    // get a session
-    @PostMapping("/login")
-    Session login(@RequestBody User u) {
-        return UsersDBController.login(u);
-    }
 }

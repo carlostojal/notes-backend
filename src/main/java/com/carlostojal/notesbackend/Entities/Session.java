@@ -5,23 +5,25 @@ import java.util.UUID;
 
 public class Session {
 
-    public Session() {}
+    public Session() {
+        this.generateID();
+    }
 
     public Session(User user) {
-        this.session_id = UUID.randomUUID();
+        this.generateID();
         this.user = user;
     }
 
-    private UUID session_id;
+    private UUID id;
     private User user;
     private Date expiry;
 
-    public UUID getSession_id() {
-        return session_id;
+    public UUID getId() {
+        return id;
     }
 
-    public void setSession_id(UUID session_id) {
-        this.session_id = session_id;
+    public void setId(UUID session_id) {
+        this.id = session_id;
     }
 
     public User getUser() {
@@ -38,5 +40,9 @@ public class Session {
 
     public void setExpiry(Date expiry) {
         this.expiry = expiry;
+    }
+
+    public void generateID() {
+        this.id = UUID.randomUUID();
     }
 }
