@@ -1,6 +1,5 @@
 package com.carlostojal.notesbackend.RestControllers;
 
-import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;

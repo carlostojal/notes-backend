@@ -1,6 +1,5 @@
 package com.carlostojal.notesbackend.DBControllers;
 
-import com.carlostojal.notesbackend.Entities.Session;
 import com.carlostojal.notesbackend.Entities.User;
 
 import java.sql.*;

@@ -1,7 +1,6 @@
 package com.carlostojal.notesbackend.RestControllers;
 
 import com.carlostojal.notesbackend.DBControllers.UsersDBController;
-import com.carlostojal.notesbackend.Entities.Session;
 import com.carlostojal.notesbackend.Entities.User;
 import org.springframework.web.bind.annotation.*;
 
