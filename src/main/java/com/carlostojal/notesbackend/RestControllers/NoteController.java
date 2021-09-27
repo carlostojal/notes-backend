@@ -9,6 +9,7 @@ import com.carlostojal.notesbackend.DBControllers.UsersDBController;
 import com.carlostojal.notesbackend.Entities.Note;
 
 import com.carlostojal.notesbackend.Entities.User;
+import com.carlostojal.notesbackend.Exceptions.NotAllowedException;
 import com.carlostojal.notesbackend.Utils.Encoding;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,29 +18,29 @@ public class NoteController {
 
     // get all notes
     @GetMapping("/notes")
-    ArrayList<Note> getAll(@RequestHeader String authorization) {
+    ArrayList<Note> getAll(@RequestHeader String authorization) throws Exception {
 
         User sessionUser = UsersDBController.login(Encoding.decodeToken(authorization));
         if(sessionUser != null)
             return NotesDBController.getAll(sessionUser);
         else
-            return null;
+            throw new NotAllowedException();
     }
 
     // get a note by id
     @GetMapping("/notes/{id}")
-    Note getSingle(@PathVariable String id, @RequestHeader String authorization) {
+    Note getSingle(@PathVariable String id, @RequestHeader String authorization) throws Exception {
 
         User sessionUser = UsersDBController.login(Encoding.decodeToken(authorization));
         if(sessionUser != null)
             return NotesDBController.getById(UUID.fromString(id), sessionUser);
         else
-            return null;
+            throw new NotAllowedException();
     }
 
     // create a note
     @PostMapping("/notes")
-    Note create(@RequestBody Note n, @RequestHeader String authorization) {
+    Note create(@RequestBody Note n, @RequestHeader String authorization) throws Exception {
 
         User sessionUser = UsersDBController.login(Encoding.decodeToken(authorization));
 
@@ -54,10 +55,8 @@ public class NoteController {
 
             return n;
         } else {
-            return null;
+            throw new NotAllowedException();
         }
-
     }
-
 
 }
